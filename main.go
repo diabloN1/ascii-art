@@ -30,7 +30,6 @@ func main() {
 func PrintResult(result []string) {
 	for _, v := range result {
 		fmt.Print(v)
-		fmt.Println("$")
 	}
 }
 
