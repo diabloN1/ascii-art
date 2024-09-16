@@ -6,16 +6,15 @@ func BytesToAsciiMap(style []byte) map[int]string {
 	next := 9
 	char := ""
 	nbrChar := 32
-	for i := 1; i < len(style); i++ {
-		if i < len(style) - 1 {
+	for i := 1; i < len(style) - 1; i++ {
+		if i < len(style) - 2 {
 		 	if style[i] == '\n' {
 				line++
 			} else if line == next+1 {
 				next += 9
-				chars[nbrChar] = char[1:len(char)-2]
+				chars[nbrChar] = char[:len(char)-2]
 				nbrChar++
 				char = ""
-				continue
 			}
 			char += string(style[i])
 		} else {

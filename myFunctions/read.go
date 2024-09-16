@@ -5,13 +5,13 @@ import (
 	"log"
 )
 
-func Read(fileName string) (string, error) {
+func Read(fileName string) ([]byte, error) {
 	
 	//Open File.
     file, err := os.Open(fileName)
 	if err != nil {
 		log.Println("error opening file :", fileName)
-		return "", err
+		return []byte{}, err
 	}
 
 	defer file.Close()
@@ -20,7 +20,7 @@ func Read(fileName string) (string, error) {
     fileInfo, err := file.Stat()
     if err != nil {
         log.Println("Error getting file stats:", err)
-		return "", err
+		return []byte{}, err
     }
 
     //Get file size.
@@ -31,7 +31,7 @@ func Read(fileName string) (string, error) {
     _, err = file.Read(data)
     if err != nil {
 		log.Println("Error reading the file:", err)
-		return "", err
+		return []byte{}, err
     }
-	return string(data), nil
+	return data, nil
 }

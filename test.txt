@@ -1,0 +1,6 @@
+i+1 == len(str) - 1
+before \n (x true)
+
+else if x {  }
+\n\n\n\nhello
+hello\nWorld
