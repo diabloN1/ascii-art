@@ -5,21 +5,23 @@ func BytesToAsciiMap(style []byte) map[int]string {
 	line := 1
 	next := 9
 	char := ""
-	nbrChar := 32
+	intValue := 32
+
+	//Range byte by byte standard to fill each ascii separatly in the map.
 	for i := 1; i < len(style) - 1; i++ {
 		if i < len(style) - 2 {
 		 	if style[i] == '\n' {
 				line++
 			} else if line == next+1 {
 				next += 9
-				chars[nbrChar] = char[:len(char)-2]
-				nbrChar++
+				chars[intValue] = char[:len(char)-2]
+				intValue++
 				char = ""
 			}
 			char += string(style[i])
 		} else {
 			char += string(style[i])
-			chars[nbrChar] = char
+			chars[intValue] = char
 		}
 	}
 	return chars

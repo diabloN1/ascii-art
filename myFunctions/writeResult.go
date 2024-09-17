@@ -13,12 +13,12 @@ func WriteResult(asciiChars map[int]string) ([]string, error) {
 	inWord := false
 	letterCount := 0
 	for i := 0; i < len(str); i++ {
-		//Handle non ascii char
+		// Handle non ascii char.
 		if str[i] < 32 || str[i] > 126 {
 			return result, fmt.Errorf("A none ascii char has been found !!")
 		}
 
-		//Handle \n
+		// Handle \n.
 		if str[i] == '\\' && str[i+1] == 'n' {
 			if !inWord {
 				result = append(result, "")
@@ -30,7 +30,10 @@ func WriteResult(asciiChars map[int]string) ([]string, error) {
 			inWord = false
 			i++
 			continue
-		} else if letterCount == 0 {
+		}
+		
+		// Prepare Slice to write character.
+		if letterCount == 0 {
 			newLineAscii := []string{"", "", "", "", "", "", "", ""}
 			result = append(result, newLineAscii...)
 		} else if !inWord {
@@ -38,6 +41,8 @@ func WriteResult(asciiChars map[int]string) ([]string, error) {
 			result = append(result, newLineAscii...)
 			lineToWrite += 8
 		}
+
+		//Filling the letter in the result slice.
 		letterCount++
 		inWord = true
 		asciiChar := strings.Split(asciiChars[int(str[i])], "\n")
