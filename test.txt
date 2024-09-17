@@ -4,3 +4,16 @@ before \n (x true)
 else if x {  }
 \n\n\n\nhello
 hello\nWorld
+
+
+
+///////////////////////////
+if hello \n\n\nworld
+if hello\nworld
+
+
+if inWord first newline don't Work
+else newLine append 1 empty
+
+if !inWord and found letter append 8 empty to slice
+else nothing

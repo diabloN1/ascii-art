@@ -10,7 +10,8 @@ func WriteResult(asciiChars map[int]string) ([]string, error) {
 	result := []string{}
 	lineToWrite := 0
 	str := os.Args[1]
-	isOn := false
+	inWord := false
+	letterCount := 0
 	for i := 0; i < len(str); i++ {
 		//Handle non ascii char
 		if str[i] < 32 || str[i] > 126 {
@@ -19,31 +20,42 @@ func WriteResult(asciiChars map[int]string) ([]string, error) {
 
 		//Handle \n
 		if str[i] == '\\' && str[i+1] == 'n' {
-			if i == 0 {
-				result = append(result,	"")
+			if !inWord {
+				result = append(result, "")
 				lineToWrite++
-				isOn = true
-			} else if len(str) == i+2 || (len(str) > i + 3 && str[i+2] == '\\' && str[i+3] == 'n'){
-				result = append(result,	"")
+			} else if OnlyNewLinesRemaining(str[i:]) {
+				result = append(result, "")
 				lineToWrite++
-			} else {
-				fmt.Println("ok")
-				newLineAscii := []string{"","","","","","","",""}
-				result = append(result,	newLineAscii...)
-				lineToWrite += 8
 			}
+			inWord = false
 			i++
 			continue
-		} else if i == 0 || isOn {
-			newLineAscii := []string{"","","","","","","",""}
-			result = append(result,	newLineAscii...)
-			isOn = false
+		} else if letterCount == 0 {
+			newLineAscii := []string{"", "", "", "", "", "", "", ""}
+			result = append(result, newLineAscii...)
+		} else if !inWord {
+			newLineAscii := []string{"", "", "", "", "", "", "", ""}
+			result = append(result, newLineAscii...)
+			lineToWrite += 8
 		}
-		
+		letterCount++
+		inWord = true
 		asciiChar := strings.Split(asciiChars[int(str[i])], "\n")
 		for i, line := range asciiChar {
-			result[i + lineToWrite] += line
+			result[i+lineToWrite] += line
 		}
 	}
 	return result, nil
+}
+
+func OnlyNewLinesRemaining(str string) bool {
+	for i := 0; i < len(str); i++ {
+		if i+1 < len(str) && str[i] == '\\' && str[i+1] == 'n' {
+			i++
+			continue
+		} else {
+			return false
+		}
+	}
+	return true
 }
