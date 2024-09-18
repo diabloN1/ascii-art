@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func WriteResult(asciiChars map[int]string) ([]string, error) {
+func WriteResult(asciiChars map[byte]string) ([]string, error) {
 	result := []string{}
 	lineToWrite := 0
 	str := os.Args[1]
@@ -19,7 +19,7 @@ func WriteResult(asciiChars map[int]string) ([]string, error) {
 		}
 
 		// Handle \n.
-		if str[i] == '\\' && str[i+1] == 'n' {
+		if i+1 < len(str) && str[i] == '\\' && str[i+1] == 'n' {
 			if !inWord {
 				result = append(result, "")
 				lineToWrite++
@@ -45,7 +45,7 @@ func WriteResult(asciiChars map[int]string) ([]string, error) {
 		//Filling the letter in the result slice.
 		letterCount++
 		inWord = true
-		asciiChar := strings.Split(asciiChars[int(str[i])], "\n")
+		asciiChar := strings.Split(asciiChars[str[i]], "\n")
 		for i, line := range asciiChar {
 			result[i+lineToWrite] += line
 		}

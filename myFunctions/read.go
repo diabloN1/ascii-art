@@ -6,7 +6,7 @@ import (
 )
 
 func Read(fileName string) ([]byte, error) {
-	
+
 	//Open File.
     file, err := os.Open(fileName)
 	if err != nil {
