@@ -8,7 +8,6 @@ import (
 )
 
 func main() {
-	fmt.Println(os.Args[1])
 	if len(os.Args) != 2 {
 		fmt.Println("Usage: go run . [STRING]")
 		fmt.Println()
